@@ -38,26 +38,86 @@ export type Database = {
         }
         Relationships: []
       }
+      job_applications: {
+        Row: {
+          applied_at: string | null
+          company: string
+          created_at: string
+          id: string
+          location: string | null
+          notes: string | null
+          role: string
+          salary_range: string | null
+          source_url: string | null
+          status: Database["public"]["Enums"]["job_status"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          applied_at?: string | null
+          company: string
+          created_at?: string
+          id?: string
+          location?: string | null
+          notes?: string | null
+          role: string
+          salary_range?: string | null
+          source_url?: string | null
+          status?: Database["public"]["Enums"]["job_status"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          applied_at?: string | null
+          company?: string
+          created_at?: string
+          id?: string
+          location?: string | null
+          notes?: string | null
+          role?: string
+          salary_range?: string | null
+          source_url?: string | null
+          status?: Database["public"]["Enums"]["job_status"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
+          career_goals: string | null
           created_at: string
           email: string | null
+          experience_summary: string | null
           full_name: string | null
+          headline: string | null
           id: string
+          skills: string[]
+          target_roles: string[]
           updated_at: string
         }
         Insert: {
+          career_goals?: string | null
           created_at?: string
           email?: string | null
+          experience_summary?: string | null
           full_name?: string | null
+          headline?: string | null
           id: string
+          skills?: string[]
+          target_roles?: string[]
           updated_at?: string
         }
         Update: {
+          career_goals?: string | null
           created_at?: string
           email?: string | null
+          experience_summary?: string | null
           full_name?: string | null
+          headline?: string | null
           id?: string
+          skills?: string[]
+          target_roles?: string[]
           updated_at?: string
         }
         Relationships: []
@@ -80,11 +140,72 @@ export type Database = {
         }
         Relationships: []
       }
+      user_stats: {
+        Row: {
+          current_streak: number
+          last_active_date: string | null
+          level: number
+          longest_streak: number
+          total_xp: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          current_streak?: number
+          last_active_date?: string | null
+          level?: number
+          longest_streak?: number
+          total_xp?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          current_streak?: number
+          last_active_date?: string | null
+          level?: number
+          longest_streak?: number
+          total_xp?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      xp_events: {
+        Row: {
+          amount: number
+          created_at: string
+          event_type: string
+          id: string
+          meta: Json
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          event_type: string
+          id?: string
+          meta?: Json
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          event_type?: string
+          id?: string
+          meta?: Json
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      award_xp: {
+        Args: { _amount: number; _meta?: Json; _type: string; _user_id: string }
+        Returns: undefined
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -95,6 +216,14 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "user"
+      job_status:
+        | "saved"
+        | "applied"
+        | "screening"
+        | "interview"
+        | "offer"
+        | "rejected"
+        | "ghosted"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -223,6 +352,15 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "user"],
+      job_status: [
+        "saved",
+        "applied",
+        "screening",
+        "interview",
+        "offer",
+        "rejected",
+        "ghosted",
+      ],
     },
   },
 } as const
