@@ -3,16 +3,17 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Brain, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/contexts/AuthContext";
 
 const links = [
-  { href: "#features", label: "Features" },
-  { href: "#how", label: "How it works" },
-  { href: "#pricing", label: "Pricing" },
+  { href: "/#features", label: "Features" },
+  { href: "/#how", label: "How it works" },
+  { href: "/#pricing", label: "Pricing" },
 ];
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-
+  const { user } = useAuth();
   const close = () => setOpen(false);
 
   return (
@@ -34,12 +35,20 @@ const Navbar = () => {
         </div>
 
         <div className="hidden items-center gap-2 md:flex">
-          <Button variant="ghost" size="sm" asChild>
-            <Link to="/signup">Sign in</Link>
-          </Button>
-          <Button variant="hero" size="sm" asChild>
-            <Link to="/signup">Get started</Link>
-          </Button>
+          {user ? (
+            <Button variant="hero" size="sm" asChild>
+              <Link to="/dashboard">Open dashboard</Link>
+            </Button>
+          ) : (
+            <>
+              <Button variant="ghost" size="sm" asChild>
+                <Link to="/signup">Sign in</Link>
+              </Button>
+              <Button variant="hero" size="sm" asChild>
+                <Link to="/signup">Get started</Link>
+              </Button>
+            </>
+          )}
         </div>
 
         <button
@@ -71,12 +80,20 @@ const Navbar = () => {
             </a>
           ))}
           <div className="mt-2 flex flex-col gap-2 px-1">
-            <Button variant="ghost" size="sm" onClick={close} asChild className="justify-center">
-              <Link to="/signup">Sign in</Link>
-            </Button>
-            <Button variant="hero" size="sm" onClick={close} asChild className="justify-center">
-              <Link to="/signup">Get started</Link>
-            </Button>
+            {user ? (
+              <Button variant="hero" size="sm" onClick={close} asChild className="justify-center">
+                <Link to="/dashboard">Open dashboard</Link>
+              </Button>
+            ) : (
+              <>
+                <Button variant="ghost" size="sm" onClick={close} asChild className="justify-center">
+                  <Link to="/signup">Sign in</Link>
+                </Button>
+                <Button variant="hero" size="sm" onClick={close} asChild className="justify-center">
+                  <Link to="/signup">Get started</Link>
+                </Button>
+              </>
+            )}
           </div>
         </div>
       </div>
