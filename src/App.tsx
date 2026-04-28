@@ -12,6 +12,9 @@ import Terms from "./pages/Terms.tsx";
 import Contact from "./pages/Contact.tsx";
 import Signup from "./pages/Signup.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
+import Jobs from "./pages/Jobs.tsx";
+import Profile from "./pages/Profile.tsx";
+import Gamification from "./pages/Gamification.tsx";
 
 const queryClient = new QueryClient();
 
@@ -25,14 +28,10 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/signup" element={<Signup />} />
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            />
+            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route path="/jobs" element={<ProtectedRoute><Jobs /></ProtectedRoute>} />
+            <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+            <Route path="/gamification" element={<ProtectedRoute><Gamification /></ProtectedRoute>} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/contact" element={<Contact />} />
