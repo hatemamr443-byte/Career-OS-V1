@@ -97,7 +97,15 @@ const Signup = () => {
       redirect_uri: `${window.location.origin}/dashboard`,
     });
     if (result.error) {
-      toast({ title: "Google sign-in failed", description: String(result.error.message ?? result.error), variant: "destructive" });
+      const msg = String(result.error.message ?? result.error);
+      const cancelled = /cancel|closed|popup/i.test(msg);
+      toast({
+        title: cancelled ? "Sign-in cancelled" : "Google sign-in failed",
+        description: cancelled
+          ? "You closed the Google window before finishing. Try again when you're ready."
+          : msg,
+        variant: cancelled ? "default" : "destructive",
+      });
       setOauthLoading(false);
       return;
     }
