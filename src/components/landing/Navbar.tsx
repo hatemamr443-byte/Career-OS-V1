@@ -1,26 +1,80 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Brain } from "lucide-react";
+import { Brain, Menu, X } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+const links = [
+  { href: "#features", label: "Features" },
+  { href: "#how", label: "How it works" },
+  { href: "#pricing", label: "Pricing" },
+];
 
 const Navbar = () => {
+  const [open, setOpen] = useState(false);
+
+  const close = () => setOpen(false);
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 glass">
       <nav className="container flex h-16 items-center justify-between">
-        <a href="#" className="flex items-center gap-2 font-semibold">
+        <a href="#" className="flex items-center gap-2 font-semibold" onClick={close}>
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-primary shadow-glow">
             <Brain className="h-4 w-4 text-primary-foreground" />
           </div>
           <span className="text-lg">Career OS</span>
         </a>
+
         <div className="hidden items-center gap-8 text-sm text-muted-foreground md:flex">
-          <a href="#features" className="transition-smooth hover:text-foreground">Features</a>
-          <a href="#how" className="transition-smooth hover:text-foreground">How it works</a>
-          <a href="#pricing" className="transition-smooth hover:text-foreground">Pricing</a>
+          {links.map((l) => (
+            <a key={l.href} href={l.href} className="transition-smooth hover:text-foreground">
+              {l.label}
+            </a>
+          ))}
         </div>
-        <div className="flex items-center gap-2">
-          <Button variant="ghost" size="sm" className="hidden sm:inline-flex">Sign in</Button>
+
+        <div className="hidden items-center gap-2 md:flex">
+          <Button variant="ghost" size="sm">Sign in</Button>
           <Button variant="hero" size="sm">Get started</Button>
         </div>
+
+        <button
+          type="button"
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+          onClick={() => setOpen((v) => !v)}
+          className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border/60 text-foreground transition-smooth hover:bg-secondary md:hidden"
+        >
+          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
       </nav>
+
+      <div
+        className={cn(
+          "overflow-hidden border-t border-border/40 transition-[max-height,opacity] duration-300 ease-out md:hidden",
+          open ? "max-h-96 opacity-100" : "max-h-0 opacity-0",
+        )}
+      >
+        <div className="container flex flex-col gap-1 py-4">
+          {links.map((l) => (
+            <a
+              key={l.href}
+              href={l.href}
+              onClick={close}
+              className="rounded-lg px-3 py-3 text-sm text-muted-foreground transition-smooth hover:bg-secondary hover:text-foreground"
+            >
+              {l.label}
+            </a>
+          ))}
+          <div className="mt-2 flex flex-col gap-2 px-1">
+            <Button variant="ghost" size="sm" onClick={close} className="justify-center">
+              Sign in
+            </Button>
+            <Button variant="hero" size="sm" onClick={close} className="justify-center">
+              Get started
+            </Button>
+          </div>
+        </div>
+      </div>
     </header>
   );
 };
