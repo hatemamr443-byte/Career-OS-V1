@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
@@ -14,9 +15,11 @@ const CTA = () => {
             <p className="mx-auto mt-4 max-w-xl text-lg text-muted-foreground">
               Join thousands of professionals who replaced spray-and-pray with science.
             </p>
-            <Button variant="hero" size="xl" className="mt-8 group">
-              Get Career OS free
-              <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
+            <Button variant="hero" size="xl" className="mt-8 group" asChild>
+              <Link to="/signup">
+                Get Career OS free
+                <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Link>
             </Button>
           </div>
         </div>

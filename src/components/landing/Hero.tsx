@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
 import heroImage from "@/assets/hero.jpg";
@@ -22,11 +23,15 @@ const Hero = () => {
             tells you when to APPLY, SKIP, or REVIEW — before you waste another hour.
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Button variant="hero" size="xl" className="group">
-              Start free
-              <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
+            <Button variant="hero" size="xl" className="group" asChild>
+              <Link to="/signup">
+                Start free
+                <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Link>
             </Button>
-            <Button variant="outline" size="xl">See how it works</Button>
+            <Button variant="outline" size="xl" asChild>
+              <a href="#how">See how it works</a>
+            </Button>
           </div>
           <p className="mt-4 text-xs text-muted-foreground">Free forever plan · No credit card required</p>
         </div>
