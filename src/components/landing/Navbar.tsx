@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Brain, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -17,12 +18,12 @@ const Navbar = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 glass">
       <nav className="container flex h-16 items-center justify-between">
-        <a href="#" className="flex items-center gap-2 font-semibold" onClick={close}>
+        <Link to="/" className="flex items-center gap-2 font-semibold" onClick={close}>
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-primary shadow-glow">
             <Brain className="h-4 w-4 text-primary-foreground" />
           </div>
           <span className="text-lg">Career OS</span>
-        </a>
+        </Link>
 
         <div className="hidden items-center gap-8 text-sm text-muted-foreground md:flex">
           {links.map((l) => (
@@ -33,8 +34,12 @@ const Navbar = () => {
         </div>
 
         <div className="hidden items-center gap-2 md:flex">
-          <Button variant="ghost" size="sm">Sign in</Button>
-          <Button variant="hero" size="sm">Get started</Button>
+          <Button variant="ghost" size="sm" asChild>
+            <Link to="/signup">Sign in</Link>
+          </Button>
+          <Button variant="hero" size="sm" asChild>
+            <Link to="/signup">Get started</Link>
+          </Button>
         </div>
 
         <button
@@ -66,11 +71,11 @@ const Navbar = () => {
             </a>
           ))}
           <div className="mt-2 flex flex-col gap-2 px-1">
-            <Button variant="ghost" size="sm" onClick={close} className="justify-center">
-              Sign in
+            <Button variant="ghost" size="sm" onClick={close} asChild className="justify-center">
+              <Link to="/signup">Sign in</Link>
             </Button>
-            <Button variant="hero" size="sm" onClick={close} className="justify-center">
-              Get started
+            <Button variant="hero" size="sm" onClick={close} asChild className="justify-center">
+              <Link to="/signup">Get started</Link>
             </Button>
           </div>
         </div>
