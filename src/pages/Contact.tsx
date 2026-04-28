@@ -32,7 +32,8 @@ const Contact = () => {
       return;
     }
     setSubmitting(true);
-    const { error } = await supabase.from("contact_messages").insert([parsed.data]);
+    const { name, email, message } = parsed.data;
+    const { error } = await supabase.from("contact_messages").insert([{ name, email, message }]);
     setSubmitting(false);
     if (error) {
       toast({ title: "Could not send message", description: error.message, variant: "destructive" });
