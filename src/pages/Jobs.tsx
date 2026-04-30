@@ -134,6 +134,14 @@ const Jobs = () => {
                           ))}
                         </SelectContent>
                       </Select>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        title="Score with AI"
+                        onClick={() => setScoring(j)}
+                      >
+                        <Sparkles className="h-4 w-4" />
+                      </Button>
                       <Button variant="ghost" size="icon" onClick={() => { setEditing(j); setOpen(true); }}>
                         <Pencil className="h-4 w-4" />
                       </Button>
@@ -150,6 +158,11 @@ const Jobs = () => {
       </div>
 
       <JobDialog open={open} onOpenChange={setOpen} job={editing} />
+      <ScoreJobDialog
+        open={!!scoring}
+        onOpenChange={(o) => !o && setScoring(null)}
+        job={scoring}
+      />
 
       <AlertDialog open={!!confirmDelete} onOpenChange={(o) => !o && setConfirmDelete(null)}>
         <AlertDialogContent>
