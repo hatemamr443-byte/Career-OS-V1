@@ -1,8 +1,9 @@
 import { useMemo, useState } from "react";
-import { Pencil, Plus, Search, Trash2 } from "lucide-react";
+import { Pencil, Plus, Search, Sparkles, Trash2 } from "lucide-react";
 import AppLayout from "@/components/app/AppLayout";
 import PageHeader from "@/components/app/PageHeader";
 import JobDialog from "@/components/app/JobDialog";
+import ScoreJobDialog from "@/components/app/ScoreJobDialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
