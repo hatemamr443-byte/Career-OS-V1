@@ -1,8 +1,9 @@
 import { useMemo, useState } from "react";
-import { Pencil, Plus, Search, Trash2 } from "lucide-react";
+import { Pencil, Plus, Search, Sparkles, Trash2 } from "lucide-react";
 import AppLayout from "@/components/app/AppLayout";
 import PageHeader from "@/components/app/PageHeader";
 import JobDialog from "@/components/app/JobDialog";
+import ScoreJobDialog from "@/components/app/ScoreJobDialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -27,6 +28,7 @@ const Jobs = () => {
 
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<JobApplication | null>(null);
+  const [scoring, setScoring] = useState<JobApplication | null>(null);
   const [confirmDelete, setConfirmDelete] = useState<JobApplication | null>(null);
   const [q, setQ] = useState("");
   const [filter, setFilter] = useState<JobStatus | "all">("all");
@@ -132,6 +134,14 @@ const Jobs = () => {
                           ))}
                         </SelectContent>
                       </Select>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        title="Score with AI"
+                        onClick={() => setScoring(j)}
+                      >
+                        <Sparkles className="h-4 w-4" />
+                      </Button>
                       <Button variant="ghost" size="icon" onClick={() => { setEditing(j); setOpen(true); }}>
                         <Pencil className="h-4 w-4" />
                       </Button>
@@ -148,6 +158,11 @@ const Jobs = () => {
       </div>
 
       <JobDialog open={open} onOpenChange={setOpen} job={editing} />
+      <ScoreJobDialog
+        open={!!scoring}
+        onOpenChange={(o) => !o && setScoring(null)}
+        job={scoring}
+      />
 
       <AlertDialog open={!!confirmDelete} onOpenChange={(o) => !o && setConfirmDelete(null)}>
         <AlertDialogContent>

@@ -83,6 +83,56 @@ export type Database = {
         }
         Relationships: []
       }
+      job_scores: {
+        Row: {
+          created_at: string
+          cv_snapshot: string | null
+          id: string
+          jd_snapshot: string | null
+          job_id: string
+          model: string
+          recommendation: string
+          score: number
+          strengths: string[]
+          user_id: string
+          weaknesses: string[]
+        }
+        Insert: {
+          created_at?: string
+          cv_snapshot?: string | null
+          id?: string
+          jd_snapshot?: string | null
+          job_id: string
+          model?: string
+          recommendation?: string
+          score: number
+          strengths?: string[]
+          user_id: string
+          weaknesses?: string[]
+        }
+        Update: {
+          created_at?: string
+          cv_snapshot?: string | null
+          id?: string
+          jd_snapshot?: string | null
+          job_id?: string
+          model?: string
+          recommendation?: string
+          score?: number
+          strengths?: string[]
+          user_id?: string
+          weaknesses?: string[]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_scores_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "job_applications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           career_goals: string | null
