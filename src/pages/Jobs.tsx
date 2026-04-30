@@ -28,6 +28,7 @@ const Jobs = () => {
 
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<JobApplication | null>(null);
+  const [scoring, setScoring] = useState<JobApplication | null>(null);
   const [confirmDelete, setConfirmDelete] = useState<JobApplication | null>(null);
   const [q, setQ] = useState("");
   const [filter, setFilter] = useState<JobStatus | "all">("all");
