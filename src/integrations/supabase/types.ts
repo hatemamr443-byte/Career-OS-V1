@@ -43,6 +43,7 @@ export type Database = {
           applied_at: string | null
           company: string
           created_at: string
+          description: string | null
           id: string
           location: string | null
           notes: string | null
@@ -57,6 +58,7 @@ export type Database = {
           applied_at?: string | null
           company: string
           created_at?: string
+          description?: string | null
           id?: string
           location?: string | null
           notes?: string | null
@@ -71,6 +73,7 @@ export type Database = {
           applied_at?: string | null
           company?: string
           created_at?: string
+          description?: string | null
           id?: string
           location?: string | null
           notes?: string | null
