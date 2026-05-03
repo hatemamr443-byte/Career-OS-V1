@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Download, Loader2, Pencil, Plus, Search, Sparkles, Trash2 } from "lucide-react";
+import { AlertCircle, CheckCircle2, Download, Loader2, Pencil, Plus, Search, Sparkles, Trash2, X } from "lucide-react";
 import AppLayout from "@/components/app/AppLayout";
 import PageHeader from "@/components/app/PageHeader";
 import JobDialog from "@/components/app/JobDialog";
@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
