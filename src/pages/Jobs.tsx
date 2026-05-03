@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Download, Loader2, Pencil, Plus, Search, Sparkles, Trash2 } from "lucide-react";
+import { AlertCircle, CheckCircle2, Download, Loader2, Pencil, Plus, Search, Sparkles, Trash2, X } from "lucide-react";
 import AppLayout from "@/components/app/AppLayout";
 import PageHeader from "@/components/app/PageHeader";
 import JobDialog from "@/components/app/JobDialog";
@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
@@ -74,6 +75,51 @@ const Jobs = () => {
             </div>
           }
         />
+
+        {scrape.isError && (
+          <Alert variant="destructive" className="relative">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Import failed</AlertTitle>
+            <AlertDescription>
+              {scrape.error instanceof Error ? scrape.error.message : "Source unavailable. Try again shortly."}
+            </AlertDescription>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute right-2 top-2 h-6 w-6"
+              onClick={() => scrape.reset()}
+            >
+              <X className="h-3 w-3" />
+            </Button>
+          </Alert>
+        )}
+
+        {scrape.isSuccess && scrape.data && (
+          <Alert className="relative border-primary/40 bg-primary/5">
+            <CheckCircle2 className="h-4 w-4 text-primary" />
+            <AlertTitle>Import complete</AlertTitle>
+            <AlertDescription className="flex flex-wrap items-center gap-3 text-xs">
+              <span className="rounded-full bg-emerald-500/15 text-emerald-400 px-2 py-0.5 font-mono">
+                +{scrape.data.inserted} added
+              </span>
+              <span className="rounded-full bg-muted text-muted-foreground px-2 py-0.5 font-mono">
+                {scrape.data.skipped} skipped (duplicates)
+              </span>
+              {scrape.data.inserted === 0 && scrape.data.skipped === 0 && (
+                <span className="text-muted-foreground">No matching jobs found{q ? ` for "${q}"` : ""}.</span>
+              )}
+            </AlertDescription>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute right-2 top-2 h-6 w-6"
+              onClick={() => scrape.reset()}
+            >
+              <X className="h-3 w-3" />
+            </Button>
+          </Alert>
+        )}
+
 
         <Card className="bg-gradient-card">
           <CardContent className="p-3 flex flex-col sm:flex-row gap-2">
