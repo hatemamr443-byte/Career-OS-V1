@@ -70,20 +70,31 @@ Deno.serve(async (req) => {
     const query = (body.query ?? "").toString().trim().slice(0, 200);
     const limit = Math.min(Math.max(body.limit ?? 10, 1), 25);
 
-    // Fetch from RemoteOK public feed (no key required)
-    const resp = await fetch("https://remoteok.com/api", {
-      headers: { "User-Agent": "career-os-bot/1.0" },
+    // Fetch from Remotive public API (no key, server-friendly)
+    const url = new URL("https://remotive.com/api/remote-jobs");
+    if (query) url.searchParams.set("search", query);
+    url.searchParams.set("limit", String(Math.min(limit * 3, 50)));
+
+    const resp = await fetch(url.toString(), {
+      headers: {
+        "User-Agent": "Mozilla/5.0 (compatible; CareerOS/1.0)",
+        Accept: "application/json",
+      },
     });
     if (!resp.ok) {
-      console.error("RemoteOK fetch failed", resp.status);
+      console.error("Remotive fetch failed", resp.status);
       return json({ error: "Source unavailable" }, 502);
     }
-    const raw = await resp.json() as unknown[];
-    // First item is metadata, the rest are jobs
-    const jobs = (raw as RemoteOkJob[])
-      .filter((j) => j && j.position && j.company)
-      .filter((j) => matchesQuery(j, query))
-      .slice(0, limit);
+    const payload = await resp.json() as { jobs?: Array<Record<string, unknown>> };
+    const jobs: RemoteOkJob[] = (payload.jobs ?? []).slice(0, limit).map((j) => ({
+      id: j.id as number,
+      company: j.company_name as string,
+      position: j.title as string,
+      location: (j.candidate_required_location as string) ?? "Remote",
+      url: j.url as string,
+      description: j.description as string,
+      tags: (j.tags as string[]) ?? [],
+    }));
 
     if (!jobs.length) return json({ inserted: 0, skipped: 0, items: [] });
 
