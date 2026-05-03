@@ -72,8 +72,17 @@ Deno.serve(async (req) => {
 
     // Fetch from RemoteOK public feed (no key required)
     const resp = await fetch("https://remoteok.com/api", {
-      headers: { "User-Agent": "career-os-bot/1.0" },
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        Accept: "application/json,text/plain,*/*",
+        "Accept-Language": "en-US,en;q=0.9",
+      },
     });
+    if (resp.status === 403) {
+      console.error("RemoteOK 403 — blocked");
+      return json({ error: "RemoteOK is blocking requests from this server. Try again later or use a different source." }, 502);
+    }
     if (!resp.ok) {
       console.error("RemoteOK fetch failed", resp.status);
       return json({ error: "Source unavailable" }, 502);
