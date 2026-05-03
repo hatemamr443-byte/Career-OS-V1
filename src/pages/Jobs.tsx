@@ -76,6 +76,51 @@ const Jobs = () => {
           }
         />
 
+        {scrape.isError && (
+          <Alert variant="destructive" className="relative">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Import failed</AlertTitle>
+            <AlertDescription>
+              {scrape.error instanceof Error ? scrape.error.message : "Source unavailable. Try again shortly."}
+            </AlertDescription>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute right-2 top-2 h-6 w-6"
+              onClick={() => scrape.reset()}
+            >
+              <X className="h-3 w-3" />
+            </Button>
+          </Alert>
+        )}
+
+        {scrape.isSuccess && scrape.data && (
+          <Alert className="relative border-primary/40 bg-primary/5">
+            <CheckCircle2 className="h-4 w-4 text-primary" />
+            <AlertTitle>Import complete</AlertTitle>
+            <AlertDescription className="flex flex-wrap items-center gap-3 text-xs">
+              <span className="rounded-full bg-emerald-500/15 text-emerald-400 px-2 py-0.5 font-mono">
+                +{scrape.data.inserted} added
+              </span>
+              <span className="rounded-full bg-muted text-muted-foreground px-2 py-0.5 font-mono">
+                {scrape.data.skipped} skipped (duplicates)
+              </span>
+              {scrape.data.inserted === 0 && scrape.data.skipped === 0 && (
+                <span className="text-muted-foreground">No matching jobs found{q ? ` for "${q}"` : ""}.</span>
+              )}
+            </AlertDescription>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute right-2 top-2 h-6 w-6"
+              onClick={() => scrape.reset()}
+            >
+              <X className="h-3 w-3" />
+            </Button>
+          </Alert>
+        )}
+
+
         <Card className="bg-gradient-card">
           <CardContent className="p-3 flex flex-col sm:flex-row gap-2">
             <div className="relative flex-1">
