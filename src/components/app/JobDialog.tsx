@@ -67,6 +67,7 @@ export const JobDialog = ({ open, onOpenChange, job }: Props) => {
       source_url: v.source_url || null,
       salary_range: v.salary_range || null,
       notes: v.notes || null,
+      description: v.description || null,
       applied_at: v.status !== "saved" && !job?.applied_at ? new Date().toISOString() : job?.applied_at ?? null,
     };
     if (editing && job) {
