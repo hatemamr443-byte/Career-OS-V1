@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Pencil, Plus, Search, Sparkles, Trash2 } from "lucide-react";
+import { Download, Loader2, Pencil, Plus, Search, Sparkles, Trash2 } from "lucide-react";
 import AppLayout from "@/components/app/AppLayout";
 import PageHeader from "@/components/app/PageHeader";
 import JobDialog from "@/components/app/JobDialog";
@@ -20,11 +20,13 @@ import {
   useDeleteJob, useJobs, useUpdateJob,
 } from "@/hooks/useJobs";
 import { cn } from "@/lib/utils";
+import { useScrapeJobs } from "@/hooks/useScrapeJobs";
 
 const Jobs = () => {
   const { data: jobs, isLoading } = useJobs();
   const update = useUpdateJob();
   const del = useDeleteJob();
+  const scrape = useScrapeJobs();
 
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<JobApplication | null>(null);
@@ -56,9 +58,20 @@ const Jobs = () => {
           title="Job Tracker"
           description="Pipeline of every application. Status changes earn XP."
           actions={
-            <Button variant="hero" onClick={() => { setEditing(null); setOpen(true); }}>
-              <Plus className="h-4 w-4" /> New
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                onClick={() => scrape.mutate({ query: q, limit: 10 })}
+                disabled={scrape.isPending}
+                title="Import remote jobs from RemoteOK"
+              >
+                {scrape.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
+                Import
+              </Button>
+              <Button variant="hero" onClick={() => { setEditing(null); setOpen(true); }}>
+                <Plus className="h-4 w-4" /> New
+              </Button>
+            </div>
           }
         />
 
