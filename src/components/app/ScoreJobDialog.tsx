@@ -60,7 +60,7 @@ const ScoreJobDialog = ({ open, onOpenChange, job }: Props) => {
   useEffect(() => {
     if (open) {
       setCv(profileCv);
-      setJd(job?.notes ?? "");
+      setJd(job?.description ?? "");
       score.reset();
     }
   }, [open, profileCv, job]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -70,6 +70,13 @@ const ScoreJobDialog = ({ open, onOpenChange, job }: Props) => {
   const handleScore = () => {
     if (!job) return;
     score.mutate({ cv, jd, jobId: job.id });
+    // Persist JD on the job for next time (fire-and-forget)
+    if (jd.trim() && jd !== (job.description ?? "")) {
+      void supabase
+        .from("job_applications")
+        .update({ description: jd })
+        .eq("id", job.id);
+    }
   };
 
   return (
