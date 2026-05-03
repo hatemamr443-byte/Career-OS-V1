@@ -24,6 +24,7 @@ const schema = z.object({
   source_url: z.string().url("Must be a valid URL").max(500).optional().or(z.literal("")),
   salary_range: z.string().max(60).optional().or(z.literal("")),
   notes: z.string().max(2000).optional().or(z.literal("")),
+  description: z.string().max(10000).optional().or(z.literal("")),
 });
 type FormValues = z.infer<typeof schema>;
 
@@ -51,6 +52,7 @@ export const JobDialog = ({ open, onOpenChange, job }: Props) => {
       source_url: job?.source_url ?? "",
       salary_range: job?.salary_range ?? "",
       notes: job?.notes ?? "",
+      description: job?.description ?? "",
     },
   });
 
@@ -65,6 +67,7 @@ export const JobDialog = ({ open, onOpenChange, job }: Props) => {
       source_url: v.source_url || null,
       salary_range: v.salary_range || null,
       notes: v.notes || null,
+      description: v.description || null,
       applied_at: v.status !== "saved" && !job?.applied_at ? new Date().toISOString() : job?.applied_at ?? null,
     };
     if (editing && job) {
@@ -114,6 +117,13 @@ export const JobDialog = ({ open, onOpenChange, job }: Props) => {
           </Field>
           <Field label="Notes" error={errors.notes?.message}>
             <Textarea rows={4} {...register("notes")} placeholder="Recruiter contact, next steps…" />
+          </Field>
+          <Field label="Job description" error={errors.description?.message}>
+            <Textarea
+              rows={5}
+              {...register("description")}
+              placeholder="Paste the full job description here — used for AI scoring…"
+            />
           </Field>
           <DialogFooter>
             <Button type="button" variant="ghost" onClick={() => onOpenChange(false)}>Cancel</Button>
