@@ -44,6 +44,8 @@ const ScoreJobDialog = ({ open, onOpenChange, job }: Props) => {
   const { data: profile } = useQuery({
     queryKey: ["profile", user?.id],
     enabled: !!user && open,
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
     queryFn: async () => {
       const { data, error } = await supabase
         .from("profiles").select("*").eq("id", user!.id).maybeSingle();
