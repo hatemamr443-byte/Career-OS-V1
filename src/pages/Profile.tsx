@@ -36,6 +36,8 @@ const Profile = () => {
   const { data: profile, isLoading } = useQuery({
     queryKey: ["profile", user?.id],
     enabled: !!user,
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
     queryFn: async () => {
       const { data, error } = await supabase
         .from("profiles")

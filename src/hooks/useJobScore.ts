@@ -17,6 +17,8 @@ export const useLatestJobScore = (jobId: string | undefined) => {
   return useQuery({
     queryKey: ["job_score", jobId, user?.id],
     enabled: !!jobId && !!user,
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
     queryFn: async () => {
       const { data, error } = await supabase
         .from("job_scores")

@@ -16,6 +16,8 @@ export const useActivity = (limit = 10) => {
   return useQuery({
     queryKey: ["activity", user?.id, limit],
     enabled: !!user,
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
     queryFn: async (): Promise<ActivityItem[]> => {
       const { data, error } = await supabase
         .from("xp_events")

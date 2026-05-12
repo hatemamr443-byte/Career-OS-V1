@@ -34,11 +34,14 @@ export const useJobs = () => {
   return useQuery({
     queryKey: ["jobs", user?.id],
     enabled: !!user,
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
     queryFn: async () => {
       const { data, error } = await supabase
         .from("job_applications")
         .select("*")
-        .order("updated_at", { ascending: false });
+        .order("updated_at", { ascending: false })
+        .range(0, 49);
       if (error) throw error;
       return data;
     },
@@ -72,9 +75,14 @@ export const useUpdateJob = () => {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async ({ id, ...update }: JobUpdate & { id: string }) => {
+      // Auto-stamp applied_at when transitioning to "applied"
+      const patch: JobUpdate = { ...update };
+      if (update.status === "applied" && !update.applied_at) {
+        patch.applied_at = new Date().toISOString();
+      }
       const { data, error } = await supabase
         .from("job_applications")
-        .update(update)
+        .update(patch)
         .eq("id", id)
         .select()
         .single();
