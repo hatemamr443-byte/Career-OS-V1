@@ -285,11 +285,7 @@ export type Database = {
         Returns: boolean
       }
       match_jobs_for_user: {
-        Args: {
-          match_count?: number
-          match_threshold?: number
-          p_user_id: string
-        }
+        Args: { match_count?: number; match_threshold?: number }
         Returns: {
           company: string
           job_id: string
