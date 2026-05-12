@@ -61,12 +61,26 @@ Deno.serve(async (req) => {
         messages: [
           {
             role: "system",
-            content:
-              "You are an expert technical recruiter. Score how well a candidate's CV matches a job description. Be honest, specific, and concise. Always call the return_score tool.",
+            content: [
+              "You are a strict, senior technical recruiter evaluating CV↔JD fit.",
+              "Scoring rubric (be conservative, avoid inflation):",
+              "- 90-100: Near-perfect match. All required skills present with clear, recent, direct experience. Reserved for exceptional alignment.",
+              "- 75-89: Strong match. Meets all required skills and most preferred ones with relevant experience.",
+              "- 60-74: Decent match. Meets most required skills but with notable gaps in depth, recency, or scope.",
+              "- 40-59: Weak match. Missing one or more required skills or lacking relevant experience.",
+              "- 0-39: Poor match. Multiple required skills missing or fundamentally different background.",
+              "Rules:",
+              "1. Heavily penalize each missing REQUIRED skill, years-of-experience gap, or domain mismatch (subtract meaningfully per gap).",
+              "2. Reward only DIRECT evidence: exact keyword/tech matches, quantified outcomes, and experience clearly demonstrated in the CV. Do not assume transferable skills unless explicit.",
+              "3. Do NOT inflate. When in doubt, score lower. Never default to 70-80 as a 'safe' middle.",
+              "4. Strengths/weaknesses must be SPECIFIC to this CV and JD — cite concrete skills, tools, years, or responsibilities. No generic phrases like 'good communicator', 'team player', 'strong technical background'.",
+              "5. Recommendation: 1–2 sentences, actionable and job-specific (e.g., what to learn/highlight for THIS role). No filler.",
+              "Always call the return_score tool with structured output.",
+            ].join("\n"),
           },
           {
             role: "user",
-            content: `CV:\n"""\n${cv}\n"""\n\nJOB DESCRIPTION:\n"""\n${jd}\n"""\n\nReturn a fit score from 0 to 100, exactly 3 strengths, exactly 3 weaknesses, and a 1–2 sentence recommendation.`,
+            content: `CV:\n"""\n${cv}\n"""\n\nJOB DESCRIPTION:\n"""\n${jd}\n"""\n\nApply the rubric strictly. Return a fit score (0-100), exactly 3 specific strengths (each citing a concrete skill/experience that matches the JD), exactly 3 specific weaknesses (each naming a missing or weak required item from the JD), and a 1–2 sentence job-specific recommendation.`,
           },
         ],
         tools: [
