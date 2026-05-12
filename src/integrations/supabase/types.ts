@@ -44,6 +44,7 @@ export type Database = {
           company: string
           created_at: string
           description: string | null
+          embedding: string | null
           id: string
           location: string | null
           notes: string | null
@@ -59,6 +60,7 @@ export type Database = {
           company: string
           created_at?: string
           description?: string | null
+          embedding?: string | null
           id?: string
           location?: string | null
           notes?: string | null
@@ -74,6 +76,7 @@ export type Database = {
           company?: string
           created_at?: string
           description?: string | null
+          embedding?: string | null
           id?: string
           location?: string | null
           notes?: string | null
@@ -140,11 +143,16 @@ export type Database = {
         Row: {
           career_goals: string | null
           created_at: string
+          cv_text: string | null
+          digest_enabled: boolean
           email: string | null
+          embedding: string | null
           experience_summary: string | null
+          experience_years: number | null
           full_name: string | null
           headline: string | null
           id: string
+          location: string | null
           skills: string[]
           target_roles: string[]
           updated_at: string
@@ -152,11 +160,16 @@ export type Database = {
         Insert: {
           career_goals?: string | null
           created_at?: string
+          cv_text?: string | null
+          digest_enabled?: boolean
           email?: string | null
+          embedding?: string | null
           experience_summary?: string | null
+          experience_years?: number | null
           full_name?: string | null
           headline?: string | null
           id: string
+          location?: string | null
           skills?: string[]
           target_roles?: string[]
           updated_at?: string
@@ -164,11 +177,16 @@ export type Database = {
         Update: {
           career_goals?: string | null
           created_at?: string
+          cv_text?: string | null
+          digest_enabled?: boolean
           email?: string | null
+          embedding?: string | null
           experience_summary?: string | null
+          experience_years?: number | null
           full_name?: string | null
           headline?: string | null
           id?: string
+          location?: string | null
           skills?: string[]
           target_roles?: string[]
           updated_at?: string
@@ -265,6 +283,19 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
+      }
+      match_jobs_for_user: {
+        Args: {
+          match_count?: number
+          match_threshold?: number
+          p_user_id: string
+        }
+        Returns: {
+          company: string
+          job_id: string
+          role: string
+          similarity: number
+        }[]
       }
     }
     Enums: {
