@@ -7,6 +7,8 @@ export const useUserStats = () => {
   return useQuery({
     queryKey: ["user_stats", user?.id],
     enabled: !!user,
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
     queryFn: async () => {
       const { data, error } = await supabase
         .from("user_stats")
