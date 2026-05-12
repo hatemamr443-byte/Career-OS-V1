@@ -75,9 +75,14 @@ export const useUpdateJob = () => {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async ({ id, ...update }: JobUpdate & { id: string }) => {
+      // Auto-stamp applied_at when transitioning to "applied"
+      const patch: JobUpdate = { ...update };
+      if (update.status === "applied" && !update.applied_at) {
+        patch.applied_at = new Date().toISOString();
+      }
       const { data, error } = await supabase
         .from("job_applications")
-        .update(update)
+        .update(patch)
         .eq("id", id)
         .select()
         .single();
