@@ -13,6 +13,11 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        display: ['"Cabinet Grotesk"', '"Manrope"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        sans: ['"Manrope"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -22,6 +27,7 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          glow: "hsl(var(--primary-glow))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -46,6 +52,12 @@ export default {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+        },
+        gami: {
+          streak: "hsl(var(--gami-streak))",
+          xp: "hsl(var(--gami-xp))",
+          match: "hsl(var(--gami-match))",
+          insight: "hsl(var(--gami-insight))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
