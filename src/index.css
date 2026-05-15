@@ -2,50 +2,79 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+  Career OS — Swiss Dark / Control Room design system.
+  Base: Obsidian Black #0A0A0B. High-contrast neutrals.
+  Accents are functional (not decorative): emerald = match, azure = AI insight,
+  amber = XP, ember orange = streak. No purple/teal gradients.
+*/
+
 @layer base {
   :root {
-    --background: 230 35% 7%;
-    --foreground: 220 30% 96%;
+    /* Obsidian Black base */
+    --background: 240 6% 4%;          /* #0A0A0B */
+    --foreground: 0 0% 98%;           /* #FAFAFA */
 
-    --card: 230 30% 10%;
-    --card-foreground: 220 30% 96%;
+    --card: 240 4% 8%;                /* #141415 */
+    --card-foreground: 0 0% 98%;
 
-    --popover: 230 30% 10%;
-    --popover-foreground: 220 30% 96%;
+    --popover: 240 4% 8%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 245 90% 65%;
-    --primary-foreground: 230 35% 7%;
-    --primary-glow: 265 95% 70%;
+    /* Primary = near-white (Swiss high contrast) */
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 6% 4%;
+    --primary-glow: 0 0% 100%;
 
-    --secondary: 230 25% 14%;
-    --secondary-foreground: 220 30% 96%;
+    --secondary: 240 4% 12%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 230 20% 16%;
-    --muted-foreground: 220 15% 65%;
+    --muted: 240 4% 14%;
+    --muted-foreground: 240 5% 64%;   /* zinc-400 */
 
-    --accent: 190 95% 60%;
-    --accent-foreground: 230 35% 7%;
+    /* Accent = Electric Azure (AI insight) */
+    --accent: 211 100% 50%;           /* #007AFF */
+    --accent-foreground: 0 0% 98%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 220 30% 96%;
+    --destructive: 0 72% 55%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 230 25% 18%;
-    --input: 230 25% 16%;
-    --ring: 245 90% 65%;
+    --border: 240 4% 16%;             /* zinc-800 */
+    --input: 240 4% 14%;
+    --ring: 0 0% 98%;
 
     --radius: 0.75rem;
 
-    --gradient-primary: linear-gradient(135deg, hsl(245 90% 65%), hsl(265 95% 70%));
-    --gradient-hero: radial-gradient(ellipse at top, hsl(245 90% 65% / 0.25), transparent 60%),
-                     radial-gradient(ellipse at bottom right, hsl(190 95% 60% / 0.15), transparent 50%);
-    --gradient-text: linear-gradient(135deg, hsl(220 30% 98%), hsl(245 90% 75%));
-    --gradient-card: linear-gradient(145deg, hsl(230 30% 12% / 0.8), hsl(230 30% 8% / 0.6));
+    /* Gamification (functional accents) */
+    --gami-streak: 22 100% 50%;       /* #FF5C00 ember orange */
+    --gami-xp: 43 96% 56%;            /* #FBBF24 amber */
+    --gami-match: 160 84% 39%;        /* #10B981 emerald */
+    --gami-insight: 211 100% 50%;     /* #007AFF azure */
 
-    --shadow-glow: 0 0 60px hsl(245 90% 65% / 0.35);
-    --shadow-elegant: 0 20px 60px -20px hsl(245 90% 50% / 0.5);
-    --shadow-card: 0 8px 32px hsl(230 50% 3% / 0.5);
+    /* Gradients — neutral, no purple */
+    --gradient-primary: linear-gradient(135deg, hsl(0 0% 100%), hsl(240 5% 75%));
+    --gradient-hero: radial-gradient(ellipse at top, hsl(211 100% 50% / 0.12), transparent 60%),
+                     radial-gradient(ellipse at bottom right, hsl(160 84% 39% / 0.08), transparent 50%);
+    --gradient-text: linear-gradient(135deg, hsl(0 0% 100%), hsl(240 5% 70%));
+    --gradient-card: linear-gradient(145deg, hsl(240 4% 10% / 0.8), hsl(240 4% 6% / 0.6));
 
-    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Shadows — only on floating panels */
+    --shadow-glow: 0 0 60px hsl(211 100% 50% / 0.18);
+    --shadow-elegant: 8px 32px hsl(0 0% 0% / 0.5);
+    --shadow-card: 0 8px 32px hsl(0 0% 0% / 0.5);
+    --shadow-floating: 0 8px 32px hsl(0 0% 0% / 0.5);
+
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Sidebar */
+    --sidebar-background: 240 4% 6%;
+    --sidebar-foreground: 0 0% 92%;
+    --sidebar-primary: 0 0% 98%;
+    --sidebar-primary-foreground: 240 6% 4%;
+    --sidebar-accent: 240 4% 12%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 240 4% 16%;
+    --sidebar-ring: 0 0% 98%;
   }
 }
 
@@ -56,62 +85,84 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    font-family: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+    font-feature-settings: "ss01", "cv11";
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-display {
+    font-family: 'Cabinet Grotesk', 'Manrope', ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  .font-mono, code, kbd, pre, samp, [class*="tabular"] {
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   }
 
   html {
     scroll-behavior: smooth;
   }
 
-  /* Offset in-page anchors so fixed navbar (h-16) doesn't overlap section headings */
   section[id] {
     scroll-margin-top: 5rem;
   }
 }
 
 @layer utilities {
-  .bg-gradient-primary {
-    background-image: var(--gradient-primary);
-  }
-  .bg-gradient-hero {
-    background-image: var(--gradient-hero);
-  }
-  .bg-gradient-card {
-    background-image: var(--gradient-card);
-  }
-  .text-gradient {
+  .bg-gradient-primary { background-image: var(--gradient-primary); }
+  .bg-gradient-hero    { background-image: var(--gradient-hero); }
+  .bg-gradient-card    { background-image: var(--gradient-card); }
+
+  .text-gradient,
+  .text-gradient-primary {
     background-image: var(--gradient-text);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
-  .text-gradient-primary {
-    background-image: var(--gradient-primary);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+
+  .shadow-glow     { box-shadow: var(--shadow-glow); }
+  .shadow-elegant  { box-shadow: var(--shadow-elegant); }
+  .shadow-card     { box-shadow: var(--shadow-card); }
+  .shadow-floating { box-shadow: var(--shadow-floating); }
+
+  /* Glassmorphism — for floating panels (AI Coach, Job Detail overlay) */
+  .glass,
+  .floating-panel {
+    background: hsl(0 0% 0% / 0.6);
+    backdrop-filter: blur(32px);
+    -webkit-backdrop-filter: blur(32px);
+    border: 1px solid hsl(0 0% 100% / 0.10);
+    box-shadow: 0 8px 32px hsl(0 0% 0% / 0.5);
+    border-radius: 1rem;
   }
-  .shadow-glow {
-    box-shadow: var(--shadow-glow);
+
+  /* Dashboard surface — subtle, no shadow on base */
+  .dashboard-card {
+    background: hsl(240 4% 10% / 0.4);
+    border: 1px solid hsl(240 4% 16% / 0.5);
+    border-radius: 0.75rem;
   }
-  .shadow-elegant {
-    box-shadow: var(--shadow-elegant);
-  }
-  .shadow-card {
-    box-shadow: var(--shadow-card);
-  }
-  .glass {
-    background: hsl(230 30% 10% / 0.6);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid hsl(230 25% 22% / 0.5);
-  }
+
   .grid-bg {
     background-image:
-      linear-gradient(hsl(230 25% 18% / 0.4) 1px, transparent 1px),
-      linear-gradient(90deg, hsl(230 25% 18% / 0.4) 1px, transparent 1px);
+      linear-gradient(hsl(240 4% 16% / 0.4) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(240 4% 16% / 0.4) 1px, transparent 1px);
     background-size: 56px 56px;
     mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  }
+
+  /* Gamification text helpers (use with font-mono) */
+  .text-streak  { color: hsl(var(--gami-streak)); }
+  .text-xp      { color: hsl(var(--gami-xp)); }
+  .text-match   { color: hsl(var(--gami-match)); }
+  .text-insight { color: hsl(var(--gami-insight)); }
+
+  .overline {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-weight: 700;
+    color: hsl(240 5% 50%);
   }
 }
 
