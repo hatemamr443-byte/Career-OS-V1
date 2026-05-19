@@ -11,6 +11,9 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useJobs } from "@/hooks/useJobs";
 import { useUserStats, xpProgressInLevel } from "@/hooks/useUserStats";
 import { useActivity } from "@/hooks/useActivity";
+import { useCareerInsights } from "@/hooks/useCareerMemory";
+import { Brain } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 const fmtTime = (iso: string) => {
   const d = new Date(iso);
@@ -35,6 +38,7 @@ const Dashboard = () => {
   const { data: jobs, isLoading: jobsLoading } = useJobs();
   const { data: stats, isLoading: statsLoading } = useUserStats();
   const { data: activity, isLoading: actLoading } = useActivity(8);
+  const { data: insights } = useCareerInsights(3);
 
   const metrics = useMemo(() => {
     const list = jobs ?? [];
@@ -163,6 +167,26 @@ const Dashboard = () => {
             </CardContent>
           </Card>
         </div>
+        {!!insights?.length && (
+          <Card className="bg-gradient-card">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-base">
+                <Brain className="h-4 w-4 text-accent" /> What I learned about your career this week
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {insights.map((i) => (
+                <div key={i.id} className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <Badge variant="outline" className="text-[10px] uppercase">{i.kind.replace("_", " ")}</Badge>
+                    <span className="text-sm font-medium">{i.title}</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground">{i.body}</p>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+        )}
       </section>
     </AppLayout>
   );
