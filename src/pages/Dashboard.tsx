@@ -38,6 +38,7 @@ const Dashboard = () => {
   const { data: jobs, isLoading: jobsLoading } = useJobs();
   const { data: stats, isLoading: statsLoading } = useUserStats();
   const { data: activity, isLoading: actLoading } = useActivity(8);
+  const { data: insights } = useCareerInsights(3);
 
   const metrics = useMemo(() => {
     const list = jobs ?? [];
