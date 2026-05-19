@@ -135,6 +135,8 @@ const Profile = () => {
             </CardContent>
           </Card>
         )}
+
+        <CareerMemoryPanel />
       </div>
     </AppLayout>
   );
