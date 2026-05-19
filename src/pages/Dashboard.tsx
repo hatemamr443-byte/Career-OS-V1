@@ -11,6 +11,9 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useJobs } from "@/hooks/useJobs";
 import { useUserStats, xpProgressInLevel } from "@/hooks/useUserStats";
 import { useActivity } from "@/hooks/useActivity";
+import { useCareerInsights } from "@/hooks/useCareerMemory";
+import { Brain } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 const fmtTime = (iso: string) => {
   const d = new Date(iso);
