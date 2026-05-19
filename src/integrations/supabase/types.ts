@@ -14,6 +14,132 @@ export type Database = {
   }
   public: {
     Tables: {
+      ai_context_snapshots: {
+        Row: {
+          context_hash: string
+          created_at: string
+          feature: string
+          id: string
+          model: string
+          tokens_in: number
+          user_id: string
+        }
+        Insert: {
+          context_hash: string
+          created_at?: string
+          feature: string
+          id?: string
+          model?: string
+          tokens_in?: number
+          user_id: string
+        }
+        Update: {
+          context_hash?: string
+          created_at?: string
+          feature?: string
+          id?: string
+          model?: string
+          tokens_in?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      career_events: {
+        Row: {
+          created_at: string
+          id: string
+          kind: string
+          payload: Json
+          ref_id: string | null
+          source: string
+          user_id: string
+          weight: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          kind: string
+          payload?: Json
+          ref_id?: string | null
+          source?: string
+          user_id: string
+          weight?: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          kind?: string
+          payload?: Json
+          ref_id?: string | null
+          source?: string
+          user_id?: string
+          weight?: number
+        }
+        Relationships: []
+      }
+      career_insights: {
+        Row: {
+          body: string
+          created_at: string
+          evidence: Json
+          id: string
+          kind: string
+          title: string
+          user_id: string
+          valid_until: string | null
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          evidence?: Json
+          id?: string
+          kind: string
+          title: string
+          user_id: string
+          valid_until?: string | null
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          evidence?: Json
+          id?: string
+          kind?: string
+          title?: string
+          user_id?: string
+          valid_until?: string | null
+        }
+        Relationships: []
+      }
+      career_memory: {
+        Row: {
+          confidence: number
+          id: string
+          key: string
+          source: string
+          updated_at: string
+          user_id: string
+          value: Json
+        }
+        Insert: {
+          confidence?: number
+          id?: string
+          key: string
+          source?: string
+          updated_at?: string
+          user_id: string
+          value?: Json
+        }
+        Update: {
+          confidence?: number
+          id?: string
+          key?: string
+          source?: string
+          updated_at?: string
+          user_id?: string
+          value?: Json
+        }
+        Relationships: []
+      }
       contact_messages: {
         Row: {
           created_at: string
@@ -35,6 +161,66 @@ export type Database = {
           id?: string
           message?: string
           name?: string
+        }
+        Relationships: []
+      }
+      decisions: {
+        Row: {
+          burnout_risk: number
+          confidence: number
+          created_at: string
+          decision: string
+          evidence_event_ids: string[]
+          fit_score: number
+          growth_score: number
+          id: string
+          job_id: string
+          model: string
+          reasoning: string
+          roi_score: number
+          salary_alignment: number
+          strengths: string[]
+          tradeoffs: Json
+          user_id: string
+          weaknesses: string[]
+        }
+        Insert: {
+          burnout_risk?: number
+          confidence?: number
+          created_at?: string
+          decision: string
+          evidence_event_ids?: string[]
+          fit_score?: number
+          growth_score?: number
+          id?: string
+          job_id: string
+          model?: string
+          reasoning?: string
+          roi_score?: number
+          salary_alignment?: number
+          strengths?: string[]
+          tradeoffs?: Json
+          user_id: string
+          weaknesses?: string[]
+        }
+        Update: {
+          burnout_risk?: number
+          confidence?: number
+          created_at?: string
+          decision?: string
+          evidence_event_ids?: string[]
+          fit_score?: number
+          growth_score?: number
+          id?: string
+          job_id?: string
+          model?: string
+          reasoning?: string
+          roi_score?: number
+          salary_alignment?: number
+          strengths?: string[]
+          tradeoffs?: Json
+          user_id?: string
+          weaknesses?: string[]
         }
         Relationships: []
       }
@@ -273,6 +459,17 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      append_career_event: {
+        Args: {
+          _kind: string
+          _payload: Json
+          _ref_id: string
+          _source: string
+          _user_id: string
+          _weight?: number
+        }
+        Returns: string
+      }
       award_xp: {
         Args: { _amount: number; _meta?: Json; _type: string; _user_id: string }
         Returns: undefined
@@ -292,6 +489,16 @@ export type Database = {
           role: string
           similarity: number
         }[]
+      }
+      upsert_career_memory: {
+        Args: {
+          _confidence: number
+          _key: string
+          _source: string
+          _user_id: string
+          _value: Json
+        }
+        Returns: undefined
       }
     }
     Enums: {
