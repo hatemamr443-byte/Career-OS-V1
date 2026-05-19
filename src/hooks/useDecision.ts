@@ -38,7 +38,7 @@ export const useLatestDecision = (jobId: string | undefined) => {
         .limit(1)
         .maybeSingle();
       if (error) throw error;
-      return data as Decision | null;
+      return data as unknown as Decision | null;
     },
   });
 };

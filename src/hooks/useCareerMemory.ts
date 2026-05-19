@@ -34,7 +34,7 @@ export const useCareerMemory = () => {
         .select("*")
         .order("confidence", { ascending: false });
       if (error) throw error;
-      return (data ?? []) as MemoryFact[];
+      return (data ?? []) as unknown as MemoryFact[];
     },
   });
 };
@@ -52,7 +52,7 @@ export const useCareerInsights = (limit = 5) => {
         .order("created_at", { ascending: false })
         .limit(limit);
       if (error) throw error;
-      return (data ?? []) as CareerInsight[];
+      return (data ?? []) as unknown as CareerInsight[];
     },
   });
 };
